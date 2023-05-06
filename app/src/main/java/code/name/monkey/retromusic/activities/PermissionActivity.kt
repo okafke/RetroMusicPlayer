@@ -32,7 +32,10 @@ import code.name.monkey.retromusic.R
 import code.name.monkey.retromusic.activities.base.AbsMusicServiceActivity
 import code.name.monkey.retromusic.databinding.ActivityPermissionBinding
 import code.name.monkey.retromusic.extensions.*
+import io.github.okafke.aapi.annotations.Action
+import io.github.okafke.aapi.annotations.Tree
 
+@Tree("permissions", ["Storage Access", "Nearby Devices", "Finish"])
 class PermissionActivity : AbsMusicServiceActivity() {
     private lateinit var binding: ActivityPermissionBinding
 
@@ -73,6 +76,30 @@ class PermissionActivity : AbsMusicServiceActivity() {
 
         binding.finish.accentBackgroundColor()
         binding.finish.setOnClickListener {
+            onClickFinish()
+        }
+
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finishAffinity()
+                remove()
+            }
+        })
+    }
+
+    @Action("Storage Access", "ic_sd_storage")
+    fun grantStorageAccess() {
+        binding.storagePermission.click(this)
+    }
+
+    @Action("Nearby Devices", "ic_bluetooth_connect")
+    fun grantNearbyDevices() {
+        binding.bluetoothPermission.click(this)
+    }
+
+    @Action("Finish", "baseline_check_24")
+    fun onClickFinish() {
+        runOnUiThread {
             if (hasPermissions()) {
                 startActivity(
                     Intent(this, MainActivity::class.java).addFlags(
@@ -80,15 +107,14 @@ class PermissionActivity : AbsMusicServiceActivity() {
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK
                     )
                 )
+
                 finish()
             }
         }
-        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                finishAffinity()
-                remove()
-            }
-        })
+    }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
     }
 
     private fun setupTitle() {

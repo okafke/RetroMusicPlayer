@@ -15,6 +15,7 @@
 package code.name.monkey.retromusic
 
 import android.app.Application
+import android.content.Context
 import androidx.preference.PreferenceManager
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import code.name.monkey.appthemehelper.ThemeStore
@@ -24,6 +25,7 @@ import code.name.monkey.retromusic.activities.MainActivity
 import code.name.monkey.retromusic.appshortcuts.DynamicShortcutManager
 import code.name.monkey.retromusic.billing.BillingManager
 import code.name.monkey.retromusic.helper.WallpaperAccentManager
+import io.github.okafke.aapi.annotations.ContextProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -71,6 +73,12 @@ class App : Application() {
 
     companion object {
         private var instance: App? = null
+
+        @JvmStatic
+        @ContextProvider
+        fun context(): Context {
+            return instance!!.applicationContext
+        }
 
         fun getContext(): App {
             return instance!!

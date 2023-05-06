@@ -26,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.getSystemService
 import androidx.core.view.*
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
@@ -40,11 +41,15 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.transition.MaterialFadeThrough
+import io.github.okafke.aapi.annotations.Action
+import io.github.okafke.aapi.annotations.Category
+import io.github.okafke.aapi.annotations.Tree
 import kotlinx.coroutines.Job
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import java.util.*
 
-
+@Tree("searchTree", ["Playback", "Audio", "Songs", "Type"])
+@Category("Playback", "ic_play_arrow", ["Play/Pause", "Previous", "Next"])
 class SearchFragment : AbsMainActivityFragment(R.layout.fragment_search),
     ChipGroup.OnCheckedStateChangeListener {
     companion object {
@@ -54,7 +59,7 @@ class SearchFragment : AbsMainActivityFragment(R.layout.fragment_search),
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var searchAdapter: SearchAdapter
+    lateinit var searchAdapter: SearchAdapter
     private var query: String? = null
 
     private var job: Job? = null
@@ -136,6 +141,17 @@ class SearchFragment : AbsMainActivityFragment(R.layout.fragment_search),
             }
         }
         binding.searchFilterGroup.setOnCheckedStateChangeListener(this)
+    }
+
+    @Action("Songs", "avd_music_note")
+    private fun backToSongs() {
+        mainActivity.runOnUiThread {
+            findNavController().navigate(
+                R.id.action_song,
+                null,
+                navOptions
+            )
+        }
     }
 
     private fun showData(data: List<Any>) {

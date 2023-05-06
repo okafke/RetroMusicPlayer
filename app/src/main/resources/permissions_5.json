@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Storage Access",
+    "drawableId": [
+      "ic_sd_storage"
+    ],
+    "adapter": {
+      "uid": "Storage Access",
+      "class": "code.name.monkey.retromusic.activities.PermissionActivity",
+      "method": "grantStorageAccess"
+    }
+  },
+  {
+    "name": "Nearby Devices",
+    "drawableId": [
+      "ic_bluetooth_connect"
+    ],
+    "adapter": {
+      "uid": "Nearby Devices",
+      "class": "code.name.monkey.retromusic.activities.PermissionActivity",
+      "method": "grantNearbyDevices"
+    }
+  },
+  {
+    "name": "Finish",
+    "drawableId": [
+      "baseline_check_24"
+    ],
+    "adapter": {
+      "uid": "Finish",
+      "class": "code.name.monkey.retromusic.activities.PermissionActivity",
+      "method": "onClickFinish"
+    }
+  }
+]

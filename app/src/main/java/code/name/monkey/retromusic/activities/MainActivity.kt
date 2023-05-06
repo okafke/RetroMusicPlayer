@@ -61,10 +61,11 @@ class MainActivity : AbsCastActivity() {
         val navInflater = navController.navInflater
         val navGraph = navInflater.inflate(R.navigation.main_graph)
 
-        val categoryInfo: CategoryInfo = PreferenceUtil.libraryCategory.first { it.visible }
+        // change for AAPI, start with SongsFragment
+        val categoryInfo: CategoryInfo = PreferenceUtil.libraryCategory.first { it.category == CategoryInfo.Category.Songs }
         if (categoryInfo.visible) {
-            if (!navGraph.contains(PreferenceUtil.lastTab)) PreferenceUtil.lastTab =
-                categoryInfo.category.id
+            //if (!navGraph.contains(PreferenceUtil.lastTab))
+            PreferenceUtil.lastTab = categoryInfo.category.id
             navGraph.setStartDestination(
                 if (PreferenceUtil.rememberLastTab) {
                     PreferenceUtil.lastTab.let {
@@ -77,6 +78,7 @@ class MainActivity : AbsCastActivity() {
                 } else categoryInfo.category.id
             )
         }
+
         navController.graph = navGraph
         navigationView.setupWithNavController(navController)
         // Scroll Fragment to top

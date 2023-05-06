@@ -32,6 +32,10 @@
 -dontwarn retrofit.**
 -keep class retrofit.** { *; }
 
+# AAPI
+-dontwarn io.github.okafke.**
+-keep class io.github.okafke.** { *; }
+
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep class * extends com.bumptech.glide.module.AppGlideModule {

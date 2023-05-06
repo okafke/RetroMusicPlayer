@@ -42,11 +42,15 @@ import code.name.monkey.retromusic.model.Song
 import code.name.monkey.retromusic.util.MusicUtil
 import com.bumptech.glide.Glide
 import java.util.*
+import java.util.stream.Collectors
 
 class SearchAdapter(
     private val activity: FragmentActivity,
-    private var dataSet: List<Any>
+    var dataSet: List<Any>
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    fun getSongs(): List<Song> {
+        return dataSet.stream().filter { it is Song }.map { it as Song }.collect(Collectors.toList())
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun swapDataSet(dataSet: List<Any>) {

@@ -1,5 +1,6 @@
 package code.name.monkey.retromusic.views
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
@@ -18,7 +19,7 @@ class PermissionItem @JvmOverloads constructor(
     defStyleAttr: Int = -1,
     defStyleRes: Int = -1
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
-    private var binding: ItemPermissionBinding
+    var binding: ItemPermissionBinding
     val checkImage get() = binding.checkImage
 
     init {
@@ -50,4 +51,13 @@ class PermissionItem @JvmOverloads constructor(
     fun setNumber(number: String) {
         binding.number.text = number
     }
+
+    fun click(activity: Activity) {
+        activity.runOnUiThread {
+            if (binding.button.isEnabled) {
+                binding.button.performClick()
+            }
+        }
+    }
+
 }

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "Playback",
+    "drawableId": [
+      "ic_play_arrow"
+    ],
+    "children": [
+      {
+        "name": "Play/Pause",
+        "drawableId": [
+          "ic_play_arrow"
+        ],
+        "adapter": {
+          "uid": "Play/Pause",
+          "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
+          "method": "playPause"
+        }
+      },
+      {
+        "name": "Previous",
+        "drawableId": [
+          "ic_skip_previous"
+        ],
+        "adapter": {
+          "uid": "Previous",
+          "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
+          "method": "playPreviousSong"
+        }
+      },
+      {
+        "name": "Next",
+        "drawableId": [
+          "ic_skip_next"
+        ],
+        "adapter": {
+          "uid": "Next",
+          "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
+          "method": "playNextSong"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Audio",
+    "drawableId": [
+      "ic_baseline_music_note_24"
+    ],
+    "children": [
+      {
+        "name": "Mute",
+        "drawableId": [
+          "ic_baseline_volume_off_24"
+        ],
+        "adapter": {
+          "uid": "Mute",
+          "class": "io.github.okafke.clientcommons.tree.AudioTree",
+          "method": "mute"
+        }
+      },
+      {
+        "name": "VolDown",
+        "drawableId": [
+          "ic_baseline_volume_down_24"
+        ],
+        "adapter": {
+          "uid": "VolDown",
+          "class": "io.github.okafke.clientcommons.tree.AudioTree",
+          "method": "volDown"
+        }
+      },
+      {
+        "name": "VolUp",
+        "drawableId": [
+          "ic_baseline_volume_up_24"
+        ],
+        "adapter": {
+          "uid": "VolUp",
+          "class": "io.github.okafke.clientcommons.tree.AudioTree",
+          "method": "volUp"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "drawableId": [
+      "ic_search"
+    ],
+    "adapter": {
+      "uid": "Search",
+      "class": "code.name.monkey.retromusic.fragments.base.AbsRecyclerViewFragment",
+      "method": "navigate"
+    }
+  },
+  {
+    "name": "Type",
+    "drawableId": [
+      "keyboard"
+    ],
+    "adapter": {
+      "uid": "Type",
+      "class": "io.github.okafke.aapi.client.keyboard.Keyboard",
+      "method": "loadLowerCaseTree"
+    }
+  }
+]

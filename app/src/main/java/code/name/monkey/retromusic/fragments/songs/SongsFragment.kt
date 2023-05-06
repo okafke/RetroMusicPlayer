@@ -17,6 +17,7 @@ package code.name.monkey.retromusic.fragments.songs
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.LayoutRes
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import code.name.monkey.retromusic.R
 import code.name.monkey.retromusic.adapter.song.SongAdapter
@@ -24,10 +25,17 @@ import code.name.monkey.retromusic.extensions.setUpMediaRouteButton
 import code.name.monkey.retromusic.fragments.GridStyle
 import code.name.monkey.retromusic.fragments.ReloadType
 import code.name.monkey.retromusic.fragments.base.AbsRecyclerViewCustomGridSizeFragment
+import code.name.monkey.retromusic.fragments.search.SearchFragment
+import code.name.monkey.retromusic.helper.MusicPlayerRemote
 import code.name.monkey.retromusic.helper.SortOrder.SongSortOrder
 import code.name.monkey.retromusic.util.PreferenceUtil
 import code.name.monkey.retromusic.util.RetroUtil
+import io.github.okafke.aapi.annotations.Action
+import io.github.okafke.aapi.annotations.Category
+import io.github.okafke.aapi.annotations.Tree
 
+@Tree("main", ["Playback", "Audio", "Search", "Type"])
+@Category("Playback", "ic_play_arrow", ["Play/Pause", "Previous", "Next"])
 class SongsFragment : AbsRecyclerViewCustomGridSizeFragment<SongAdapter, GridLayoutManager>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -328,9 +336,95 @@ class SongsFragment : AbsRecyclerViewCustomGridSizeFragment<SongAdapter, GridLay
         adapter?.actionMode?.finish()
     }
 
+    @Action("Play/Pause", "ic_play_arrow")
+    fun playPause() {
+        activity?.runOnUiThread {
+            println("SongsFragment is visible $isVisible")
+            if (MusicPlayerRemote.isPlaying) {
+                printSongs()
+                MusicPlayerRemote.pauseSong()
+            } else {
+                enqueueSearchedSongs()
+                println("isVisilbe $isVisible ${adapter?.dataSet?.stream()?.anyMatch { !MusicPlayerRemote.playingQueue.contains(it) } == true}")
+                if (MusicPlayerRemote.position == -1
+                    || MusicPlayerRemote.playingQueue.isEmpty()
+                    || this.isVisible && adapter?.dataSet?.stream()?.anyMatch { !MusicPlayerRemote.playingQueue.contains(it) } == true
+                ) {
+                    println("Enqueueing songs! $isVisible")
+                    MusicPlayerRemote.clearQueue()
+                    MusicPlayerRemote.enqueue(libraryViewModel.getSongs().value!!)
+                }
+
+                printSongs()
+                MusicPlayerRemote.resumePlaying()
+            }
+        }
+    }
+
+    @Action("Next", "ic_skip_next")
+    fun playNextSong() {
+        activity?.runOnUiThread {
+            printSongs()
+            enqueueSearchedSongs()
+            MusicPlayerRemote.musicService?.playNextSong(true)
+        }
+    }
+
+    @Action("Previous", "ic_skip_previous")
+    fun playPreviousSong() {
+        activity?.runOnUiThread {
+            printSongs()
+            enqueueSearchedSongs()
+            MusicPlayerRemote.musicService?.playPreviousSong(true)
+        }
+    }
+
+    private fun printSongs() {
+        println("Listing Songs!")
+        for (song in MusicPlayerRemote.musicService?.playingQueue?: emptyList()) {
+            println("Song in playing queue: ${song.title}")
+        }
+        println("Done listing songs!")
+    }
+
+    private fun enqueueSearchedSongs() {
+        val searchFragment = getSearchFragmentIfDisplayed()
+        println("SearchFragment: $searchFragment")
+        if (searchFragment != null
+            && lastDataSet != searchFragment.searchAdapter.dataSet) {
+            lastDataSet = searchFragment.searchAdapter.dataSet
+            println("Enqueuing SearchFragment Songs")
+            MusicPlayerRemote.clearQueue()
+            MusicPlayerRemote.enqueue(searchFragment.searchAdapter.getSongs())
+            println("Search fragment songs:")
+            searchFragment.searchAdapter.getSongs().forEach {println(it.title)}
+            printSongs()
+        }
+    }
+
+    private fun getSearchFragmentIfDisplayed(): SearchFragment? {
+        println("getSearchFragmentIfDisplayed $activity ${activity?.supportFragmentManager} ${activity?.supportFragmentManager?.fragments}")
+        for (fragment in activity?.supportFragmentManager?.fragments?: emptyList()) {
+            if (fragment is SearchFragment && fragment.isVisible) {
+                return fragment
+            } else if (fragment is NavHostFragment && fragment.isVisible) {
+                for (f in fragment.childFragmentManager.fragments) {
+                    if (f is SearchFragment && f.isVisible) {
+                        return f
+                    }
+                }
+            }
+        }
+
+        return null
+    }
+
     companion object {
         @JvmField
         var TAG: String = SongsFragment::class.java.simpleName
+
+        @JvmField
+        var lastDataSet = emptyList<Any>()
 
         @JvmStatic
         fun newInstance(): SongsFragment {

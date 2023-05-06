@@ -37,6 +37,7 @@ import code.name.monkey.retromusic.interfaces.IScrollHelper
 import code.name.monkey.retromusic.util.PreferenceUtil
 import code.name.monkey.retromusic.util.ThemedFastScroller.create
 import com.google.android.material.transition.MaterialFadeThrough
+import io.github.okafke.aapi.annotations.Action
 import me.zhanghai.android.fastscroll.FastScroller
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 
@@ -101,14 +102,21 @@ abstract class AbsRecyclerViewFragment<A : RecyclerView.Adapter<*>, LM : Recycle
 
     private fun setupToolbar() {
         toolbar.setNavigationOnClickListener {
+            navigate()
+        }
+        val appName = resources.getString(titleRes)
+        binding.appBarLayout.title = appName
+    }
+
+    @Action("Search", "ic_search")
+    fun navigate() {
+        mainActivity.runOnUiThread {
             findNavController().navigate(
                 R.id.action_search,
                 null,
                 navOptions
             )
         }
-        val appName = resources.getString(titleRes)
-        binding.appBarLayout.title = appName
     }
 
     abstract val titleRes: Int
