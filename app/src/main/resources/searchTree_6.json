@@ -37,6 +37,17 @@
           "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
           "method": "playNextSong"
         }
+      },
+      {
+        "name": "Back",
+        "drawableId": [
+          "aapi_undo"
+        ],
+        "adapter": {
+          "uid": "backAction",
+          "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+          "method": "back"
+        }
       }
     ]
   },
@@ -77,6 +88,17 @@
           "uid": "VolUp",
           "class": "io.github.okafke.clientcommons.tree.AudioTree",
           "method": "volUp"
+        }
+      },
+      {
+        "name": "Back",
+        "drawableId": [
+          "aapi_undo"
+        ],
+        "adapter": {
+          "uid": "backAction",
+          "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+          "method": "back"
         }
       }
     ]

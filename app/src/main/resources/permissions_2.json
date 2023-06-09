@@ -1,20 +1,9 @@
 [
   {
-    "name": "Finish",
-    "drawableId": [
-      "baseline_check_24"
-    ],
-    "adapter": {
-      "uid": "Finish",
-      "class": "code.name.monkey.retromusic.activities.PermissionActivity",
-      "method": "onClickFinish"
-    }
-  },
-  {
-    "name": "Nearby Devices,Storage Access",
+    "name": "Nearby Devices,Finish",
     "drawableId": [
       "ic_bluetooth_connect",
-      "ic_sd_storage"
+      "baseline_check_24"
     ],
     "children": [
       {
@@ -29,16 +18,47 @@
         }
       },
       {
-        "name": "Storage Access",
+        "name": "Finish,Back",
         "drawableId": [
-          "ic_sd_storage"
+          "baseline_check_24",
+          "aapi_undo"
         ],
-        "adapter": {
-          "uid": "Storage Access",
-          "class": "code.name.monkey.retromusic.activities.PermissionActivity",
-          "method": "grantStorageAccess"
-        }
+        "children": [
+          {
+            "name": "Finish",
+            "drawableId": [
+              "baseline_check_24"
+            ],
+            "adapter": {
+              "uid": "Finish",
+              "class": "code.name.monkey.retromusic.activities.PermissionActivity",
+              "method": "onClickFinish"
+            }
+          },
+          {
+            "name": "Back",
+            "drawableId": [
+              "aapi_undo"
+            ],
+            "adapter": {
+              "uid": "backAction",
+              "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+              "method": "back"
+            }
+          }
+        ]
       }
     ]
+  },
+  {
+    "name": "Storage Access",
+    "drawableId": [
+      "ic_sd_storage"
+    ],
+    "adapter": {
+      "uid": "Storage Access",
+      "class": "code.name.monkey.retromusic.activities.PermissionActivity",
+      "method": "grantStorageAccess"
+    }
   }
 ]

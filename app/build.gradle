@@ -100,9 +100,9 @@ static def getProperty(Properties properties, String name) {
 }
 
 dependencies {
-    implementation 'io.github.okafke.aapi:client:1.0.11'
-    implementation 'io.github.okafke.aapi:annotations:1.0.11'
-    implementation 'io.github.okafke.aapi:client-commons:1.0.11'
+    implementation 'io.github.okafke.aapi:client:1.1.3'
+    implementation 'io.github.okafke.aapi:annotations:1.1.3'
+    implementation 'io.github.okafke.aapi:client-commons:1.1.3'
 
     implementation project(':appthemehelper')
     implementation libs.gridLayout

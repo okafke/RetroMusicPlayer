@@ -1,61 +1,139 @@
 [
   {
-    "name": "Songs",
+    "name": "Type,Songs,Audio",
     "drawableId": [
-      "avd_music_note"
-    ],
-    "adapter": {
-      "uid": "Songs",
-      "class": "code.name.monkey.retromusic.fragments.search.SearchFragment",
-      "method": "backToSongs"
-    }
-  },
-  {
-    "name": "Type",
-    "drawableId": [
-      "keyboard"
-    ],
-    "adapter": {
-      "uid": "Type",
-      "class": "io.github.okafke.aapi.client.keyboard.Keyboard",
-      "method": "loadLowerCaseTree"
-    }
-  },
-  {
-    "name": "Playback,Audio",
-    "drawableId": [
-      "ic_play_arrow",
+      "keyboard",
+      "avd_music_note",
       "ic_baseline_music_note_24"
     ],
     "children": [
       {
-        "name": "Playback",
+        "name": "Songs,Audio",
         "drawableId": [
-          "ic_play_arrow"
+          "avd_music_note",
+          "ic_baseline_music_note_24"
         ],
         "children": [
           {
-            "name": "Play/Pause",
+            "name": "Songs",
             "drawableId": [
-              "ic_play_arrow"
+              "avd_music_note"
             ],
             "adapter": {
-              "uid": "Play/Pause",
-              "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
-              "method": "playPause"
+              "uid": "Songs",
+              "class": "code.name.monkey.retromusic.fragments.search.SearchFragment",
+              "method": "backToSongs"
             }
           },
           {
-            "name": "Previous",
+            "name": "Audio",
             "drawableId": [
-              "ic_skip_previous"
+              "ic_baseline_music_note_24"
             ],
-            "adapter": {
-              "uid": "Previous",
-              "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
-              "method": "playPreviousSong"
-            }
-          },
+            "children": [
+              {
+                "name": "VolUp,VolDown",
+                "drawableId": [
+                  "ic_baseline_volume_up_24",
+                  "ic_baseline_volume_down_24"
+                ],
+                "children": [
+                  {
+                    "name": "VolUp",
+                    "drawableId": [
+                      "ic_baseline_volume_up_24"
+                    ],
+                    "adapter": {
+                      "uid": "VolUp",
+                      "class": "io.github.okafke.clientcommons.tree.AudioTree",
+                      "method": "volUp"
+                    }
+                  },
+                  {
+                    "name": "VolDown,Back",
+                    "drawableId": [
+                      "ic_baseline_volume_down_24",
+                      "aapi_undo"
+                    ],
+                    "children": [
+                      {
+                        "name": "VolDown",
+                        "drawableId": [
+                          "ic_baseline_volume_down_24"
+                        ],
+                        "adapter": {
+                          "uid": "VolDown",
+                          "class": "io.github.okafke.clientcommons.tree.AudioTree",
+                          "method": "volDown"
+                        }
+                      },
+                      {
+                        "name": "Back",
+                        "drawableId": [
+                          "aapi_undo"
+                        ],
+                        "adapter": {
+                          "uid": "backAction",
+                          "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+                          "method": "back"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Mute",
+                "drawableId": [
+                  "ic_baseline_volume_off_24"
+                ],
+                "adapter": {
+                  "uid": "Mute",
+                  "class": "io.github.okafke.clientcommons.tree.AudioTree",
+                  "method": "mute"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Type",
+        "drawableId": [
+          "keyboard"
+        ],
+        "adapter": {
+          "uid": "Type",
+          "class": "io.github.okafke.aapi.client.keyboard.Keyboard",
+          "method": "loadLowerCaseTree"
+        }
+      },
+      {
+        "name": "Back",
+        "drawableId": [
+          "aapi_undo"
+        ],
+        "adapter": {
+          "uid": "backAction",
+          "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+          "method": "back"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Playback",
+    "drawableId": [
+      "ic_play_arrow"
+    ],
+    "children": [
+      {
+        "name": "Next,Previous",
+        "drawableId": [
+          "ic_skip_next",
+          "ic_skip_previous"
+        ],
+        "children": [
           {
             "name": "Next",
             "drawableId": [
@@ -66,49 +144,61 @@
               "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
               "method": "playNextSong"
             }
+          },
+          {
+            "name": "Previous,Back",
+            "drawableId": [
+              "ic_skip_previous",
+              "aapi_undo"
+            ],
+            "children": [
+              {
+                "name": "Previous",
+                "drawableId": [
+                  "ic_skip_previous"
+                ],
+                "adapter": {
+                  "uid": "Previous",
+                  "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
+                  "method": "playPreviousSong"
+                }
+              },
+              {
+                "name": "Back",
+                "drawableId": [
+                  "aapi_undo"
+                ],
+                "adapter": {
+                  "uid": "backAction",
+                  "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+                  "method": "back"
+                }
+              }
+            ]
           }
         ]
       },
       {
-        "name": "Audio",
+        "name": "Play/Pause",
         "drawableId": [
-          "ic_baseline_music_note_24"
+          "ic_play_arrow"
         ],
-        "children": [
-          {
-            "name": "Mute",
-            "drawableId": [
-              "ic_baseline_volume_off_24"
-            ],
-            "adapter": {
-              "uid": "Mute",
-              "class": "io.github.okafke.clientcommons.tree.AudioTree",
-              "method": "mute"
-            }
-          },
-          {
-            "name": "VolDown",
-            "drawableId": [
-              "ic_baseline_volume_down_24"
-            ],
-            "adapter": {
-              "uid": "VolDown",
-              "class": "io.github.okafke.clientcommons.tree.AudioTree",
-              "method": "volDown"
-            }
-          },
-          {
-            "name": "VolUp",
-            "drawableId": [
-              "ic_baseline_volume_up_24"
-            ],
-            "adapter": {
-              "uid": "VolUp",
-              "class": "io.github.okafke.clientcommons.tree.AudioTree",
-              "method": "volUp"
-            }
-          }
-        ]
+        "adapter": {
+          "uid": "Play/Pause",
+          "class": "code.name.monkey.retromusic.fragments.songs.SongsFragment",
+          "method": "playPause"
+        }
+      },
+      {
+        "name": "Back",
+        "drawableId": [
+          "aapi_undo"
+        ],
+        "adapter": {
+          "uid": "backAction",
+          "class": "io.github.okafke.aapi.client.json.instances.BackAction",
+          "method": "back"
+        }
       }
     ]
   }

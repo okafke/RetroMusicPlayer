@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        maven { url "file:///$rootDir/libs/maven" }
         maven { url "https://okafke.github.io/maven" }
         gradlePluginPortal()
     }
@@ -20,6 +21,7 @@ gradleEnterprise {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven { url "file:///$rootDir/libs/maven" }
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
